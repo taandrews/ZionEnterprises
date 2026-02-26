@@ -198,12 +198,12 @@ export default function HomePage() {
           {/* Section Header */}
           <motion.div
             initial="hidden" whileInView="show" viewport={{ once: true, margin: '-80px' }}
-            className="text-center mb-16"
+            style={{ textAlign: 'center', marginBottom: '64px' }}
           >
-            <motion.h2 variants={fadeUp} custom={0} className="text-[clamp(2rem,4vw,3rem)] font-heading font-800 text-navy mb-5">
+            <motion.h2 variants={fadeUp} custom={0} className="text-[clamp(2rem,4vw,3rem)] font-heading font-800 text-navy" style={{ marginBottom: '20px' }}>
               Four Paths to Homeownership
             </motion.h2>
-            <motion.p variants={fadeUp} custom={1} className="text-gray-text text-base font-body max-w-lg mx-auto">
+            <motion.p variants={fadeUp} custom={1} className="text-gray-text text-base font-body" style={{ maxWidth: '520px', margin: '0 auto' }}>
               Every renter has a different starting point. We meet you exactly where you are.
             </motion.p>
           </motion.div>
@@ -261,12 +261,12 @@ export default function HomePage() {
         <div className="relative" style={{ maxWidth: '1300px', margin: '0 auto', paddingLeft: 'clamp(40px, 5vw, 96px)', paddingRight: 'clamp(40px, 5vw, 96px)' }}>
           <motion.div
             initial="hidden" whileInView="show" viewport={{ once: true, margin: '-80px' }}
-            className="text-center mb-16"
+            style={{ textAlign: 'center', marginBottom: '64px' }}
           >
-            <motion.h2 variants={fadeUp} custom={0} className="text-[clamp(2rem,4vw,3rem)] font-heading font-800 text-navy mb-5">
+            <motion.h2 variants={fadeUp} custom={0} className="text-[clamp(2rem,4vw,3rem)] font-heading font-800 text-navy" style={{ marginBottom: '20px' }}>
               Which Path Is Right For You?
             </motion.h2>
-            <motion.p variants={fadeUp} custom={1} className="text-gray-text text-base font-body max-w-md mx-auto">
+            <motion.p variants={fadeUp} custom={1} className="text-gray-text text-base font-body" style={{ maxWidth: '480px', margin: '0 auto' }}>
               Your credit score shapes your options — but it never closes the door.
             </motion.p>
           </motion.div>
@@ -383,9 +383,9 @@ export default function HomePage() {
         <div style={{ maxWidth: '1300px', margin: '0 auto', paddingLeft: 'clamp(40px, 5vw, 96px)', paddingRight: 'clamp(40px, 5vw, 96px)' }}>
           <motion.div
             initial="hidden" whileInView="show" viewport={{ once: true, margin: '-80px' }}
-            className="text-center mb-16"
+            style={{ textAlign: 'center', marginBottom: '64px' }}
           >
-            <motion.h2 variants={fadeUp} custom={0} className="text-[clamp(2rem,4vw,3rem)] font-heading font-800 text-navy mb-5">
+            <motion.h2 variants={fadeUp} custom={0} className="text-[clamp(2rem,4vw,3rem)] font-heading font-800 text-navy">
               Three Simple Steps
             </motion.h2>
           </motion.div>
@@ -426,7 +426,7 @@ export default function HomePage() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
-            className="text-center mt-14"
+            style={{ textAlign: 'center', marginTop: '56px' }}
           >
             <Link
               href="/quiz"
@@ -457,9 +457,9 @@ export default function HomePage() {
         <div className="relative" style={{ zIndex: 10, maxWidth: '1300px', margin: '0 auto', paddingLeft: 'clamp(40px, 5vw, 96px)', paddingRight: 'clamp(40px, 5vw, 96px)' }}>
           <motion.div
             initial="hidden" whileInView="show" viewport={{ once: true, margin: '-80px' }}
-            className="text-center mb-16"
+            style={{ textAlign: 'center', marginBottom: '64px' }}
           >
-            <motion.h2 variants={fadeUp} custom={0} className="text-[clamp(2rem,4vw,3rem)] font-heading font-800 text-white mb-5">
+            <motion.h2 variants={fadeUp} custom={0} className="text-[clamp(2rem,4vw,3rem)] font-heading font-800 text-white">
               Real Results From{' '}
               <span className="text-gold">Real People</span>
             </motion.h2>
