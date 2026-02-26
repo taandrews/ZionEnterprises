@@ -198,12 +198,12 @@ export default function HomePage() {
           {/* Section Header */}
           <motion.div
             initial="hidden" whileInView="show" viewport={{ once: true, margin: '-80px' }}
-            style={{ textAlign: 'center', marginBottom: '64px' }}
+            style={{ textAlign: 'center', marginBottom: '48px' }}
           >
-            <motion.h2 variants={fadeUp} custom={0} className="text-[clamp(2rem,4vw,3rem)] font-heading font-800 text-navy" style={{ marginBottom: '20px' }}>
+            <motion.h2 variants={fadeUp} custom={0} className="text-[clamp(2rem,4vw,3rem)] font-heading font-800 text-navy" style={{ marginBottom: '16px' }}>
               Four Paths to Homeownership
             </motion.h2>
-            <motion.p variants={fadeUp} custom={1} className="text-gray-text text-base font-body" style={{ maxWidth: '520px', margin: '0 auto' }}>
+            <motion.p variants={fadeUp} custom={1} className="text-gray-text font-body" style={{ fontSize: '16px', maxWidth: '680px', margin: '0 auto', lineHeight: '1.6' }}>
               Every renter has a different starting point. We meet you exactly where you are.
             </motion.p>
           </motion.div>
@@ -261,12 +261,12 @@ export default function HomePage() {
         <div className="relative" style={{ maxWidth: '1300px', margin: '0 auto', paddingLeft: 'clamp(40px, 5vw, 96px)', paddingRight: 'clamp(40px, 5vw, 96px)' }}>
           <motion.div
             initial="hidden" whileInView="show" viewport={{ once: true, margin: '-80px' }}
-            style={{ textAlign: 'center', marginBottom: '64px' }}
+            style={{ textAlign: 'center', marginBottom: '48px' }}
           >
-            <motion.h2 variants={fadeUp} custom={0} className="text-[clamp(2rem,4vw,3rem)] font-heading font-800 text-navy" style={{ marginBottom: '20px' }}>
+            <motion.h2 variants={fadeUp} custom={0} className="text-[clamp(2rem,4vw,3rem)] font-heading font-800 text-navy" style={{ marginBottom: '16px' }}>
               Which Path Is Right For You?
             </motion.h2>
-            <motion.p variants={fadeUp} custom={1} className="text-gray-text text-base font-body" style={{ maxWidth: '480px', margin: '0 auto' }}>
+            <motion.p variants={fadeUp} custom={1} className="text-gray-text font-body" style={{ fontSize: '16px', maxWidth: '680px', margin: '0 auto', lineHeight: '1.6' }}>
               Your credit score shapes your options — but it never closes the door.
             </motion.p>
           </motion.div>
@@ -383,7 +383,7 @@ export default function HomePage() {
         <div style={{ maxWidth: '1300px', margin: '0 auto', paddingLeft: 'clamp(40px, 5vw, 96px)', paddingRight: 'clamp(40px, 5vw, 96px)' }}>
           <motion.div
             initial="hidden" whileInView="show" viewport={{ once: true, margin: '-80px' }}
-            style={{ textAlign: 'center', marginBottom: '64px' }}
+            style={{ textAlign: 'center', marginBottom: '48px' }}
           >
             <motion.h2 variants={fadeUp} custom={0} className="text-[clamp(2rem,4vw,3rem)] font-heading font-800 text-navy">
               Three Simple Steps
@@ -457,7 +457,7 @@ export default function HomePage() {
         <div className="relative" style={{ zIndex: 10, maxWidth: '1300px', margin: '0 auto', paddingLeft: 'clamp(40px, 5vw, 96px)', paddingRight: 'clamp(40px, 5vw, 96px)' }}>
           <motion.div
             initial="hidden" whileInView="show" viewport={{ once: true, margin: '-80px' }}
-            style={{ textAlign: 'center', marginBottom: '64px' }}
+            style={{ textAlign: 'center', marginBottom: '48px' }}
           >
             <motion.h2 variants={fadeUp} custom={0} className="text-[clamp(2rem,4vw,3rem)] font-heading font-800 text-white">
               Real Results From{' '}
@@ -570,11 +570,12 @@ export default function HomePage() {
           <motion.div initial="hidden" whileInView="show" viewport={{ once: true }}>
             <motion.h2
               variants={fadeUp} custom={1}
-              className="text-[clamp(2.4rem,5vw,3.8rem)] font-heading font-800 text-white leading-[1.1] mb-8"
+              className="text-[clamp(2.4rem,5vw,3.8rem)] font-heading font-800 text-white leading-[1.1]"
+              style={{ marginBottom: '24px' }}
             >
               Ready to Stop Renting?
             </motion.h2>
-            <motion.p variants={fadeUp} custom={2} className="text-white/40 text-lg font-body mb-12 max-w-md mx-auto leading-relaxed">
+            <motion.p variants={fadeUp} custom={2} className="text-white/40 font-body" style={{ fontSize: '18px', lineHeight: '1.6', marginBottom: '48px', maxWidth: '520px', margin: '0 auto 48px auto' }}>
               Take the first step. Our free quiz matches you with Maryland programs in under 2 minutes.
             </motion.p>
 
