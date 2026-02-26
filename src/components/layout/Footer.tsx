@@ -25,8 +25,8 @@ export function Footer() {
   return (
     <footer className="bg-navy-dark text-white">
       {/* Main content */}
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
-        <div className="py-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr] gap-12 lg:gap-8">
+      <div style={{ maxWidth: '1300px', margin: '0 auto', paddingLeft: 'clamp(40px, 5vw, 96px)', paddingRight: 'clamp(40px, 5vw, 96px)' }}>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr]" style={{ paddingTop: '80px', paddingBottom: '80px', gap: '32px' }}>
           {/* Brand */}
           <div>
             <Link href="/" className="inline-flex items-center gap-1.5 mb-7">
@@ -96,7 +96,7 @@ export function Footer() {
 
       {/* Disclaimer */}
       <div className="border-t border-white/[0.04]">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-10 py-8">
+        <div style={{ maxWidth: '1300px', margin: '0 auto', paddingLeft: 'clamp(40px, 5vw, 96px)', paddingRight: 'clamp(40px, 5vw, 96px)', paddingTop: '32px', paddingBottom: '32px' }}>
           <p className="text-white/[0.12] text-[11px] font-body leading-relaxed max-w-4xl">
             Zion Enterprises is a homeownership consulting and lead generation company. We are not a licensed mortgage lender, real estate broker, or credit repair organization. Credit repair services are provided by independent licensed partners. Individual results may vary. No specific outcomes are guaranteed. Zion Enterprises is not affiliated with the Maryland Mortgage Program or any government agency.
           </p>
@@ -105,7 +105,7 @@ export function Footer() {
 
       {/* Copyright */}
       <div className="border-t border-white/[0.03]">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-10 py-5 flex flex-col sm:flex-row items-center justify-between gap-2">
+        <div className="flex flex-col sm:flex-row items-center justify-between" style={{ maxWidth: '1300px', margin: '0 auto', paddingLeft: 'clamp(40px, 5vw, 96px)', paddingRight: 'clamp(40px, 5vw, 96px)', paddingTop: '20px', paddingBottom: '20px', gap: '8px' }}>
           <p className="text-white/[0.12] text-[11px] font-body">&copy; {new Date().getFullYear()} Zion Enterprises</p>
           <p className="text-white/[0.12] text-[11px] font-body">
             Built by <span className="text-gold/20">Init One Solutions</span>

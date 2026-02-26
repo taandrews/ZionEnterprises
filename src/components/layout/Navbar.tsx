@@ -141,7 +141,7 @@ export function Navbar() {
             transition={{ duration: 0.3 }}
             className="lg:hidden bg-white border-t border-gray-border/20 overflow-hidden"
           >
-            <div className="px-6 py-8 space-y-1">
+            <div className="space-y-1" style={{ padding: '32px 24px' }}>
               <p className="text-[10px] font-heading font-bold text-gray-text/50 uppercase tracking-[0.2em] mb-3 px-3">Services</p>
               {services.map((service) => (
                 <Link

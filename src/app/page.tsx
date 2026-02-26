@@ -93,8 +93,8 @@ export default function HomePage() {
             className="object-cover"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-navy-dark/95 via-navy/85 to-navy/60" />
-          <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/60 via-transparent to-navy-dark/30" />
+          <div className="absolute inset-0 bg-gradient-to-r from-navy-dark/80 via-navy/55 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/40 via-transparent to-navy-dark/10" />
         </motion.div>
 
         <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-gold to-transparent z-20" />
@@ -233,7 +233,7 @@ export default function HomePage() {
                   <div className="absolute inset-0 bg-gradient-to-t from-navy-dark via-navy-dark/60 to-transparent opacity-90 group-hover:opacity-95 transition-opacity duration-500" />
 
                   {/* Content */}
-                  <div className="absolute inset-0 z-10 flex flex-col justify-end p-6">
+                  <div className="absolute inset-0 z-10 flex flex-col justify-end" style={{ padding: '28px' }}>
                     {/* Icon */}
                     <div className="w-12 h-12 rounded-xl bg-gold/20 backdrop-blur-sm flex items-center justify-center mb-4 group-hover:bg-gold/30 transition-colors duration-300">
                       <s.icon className="w-5 h-5 text-gold" />
@@ -282,7 +282,7 @@ export default function HomePage() {
             >
               {/* Top color band */}
               <div className="h-2 bg-gradient-to-r from-emerald-400 to-emerald-600" />
-              <div className="p-8 lg:p-10">
+              <div style={{ padding: '40px' }}>
                 <div className="inline-flex items-center gap-2 bg-emerald-50 text-emerald-700 text-[12px] font-heading font-bold tracking-wider uppercase px-4 py-2 rounded-full mb-6">
                   <span className="w-2 h-2 rounded-full bg-emerald-500" />
                   680+
@@ -315,10 +315,10 @@ export default function HomePage() {
             >
               <div className="h-2 bg-gradient-to-r from-gold to-gold-light" />
               {/* Popular badge */}
-              <div className="absolute top-6 right-6 bg-gold text-navy text-[10px] font-heading font-bold tracking-wider uppercase px-3 py-1 rounded-full">
+              <div className="absolute bg-gold text-navy text-[10px] font-heading font-bold tracking-wider uppercase rounded-full" style={{ top: '24px', right: '24px', padding: '4px 12px' }}>
                 Most Common
               </div>
-              <div className="p-8 lg:p-10">
+              <div style={{ padding: '40px' }}>
                 <div className="inline-flex items-center gap-2 bg-gold/10 text-gold text-[12px] font-heading font-bold tracking-wider uppercase px-4 py-2 rounded-full mb-6">
                   <span className="w-2 h-2 rounded-full bg-gold" />
                   580–679
@@ -350,7 +350,7 @@ export default function HomePage() {
               className="relative bg-white rounded-2xl overflow-hidden border border-gray-border/50 group hover:shadow-[0_30px_80px_-20px_rgba(10,31,68,0.12)] transition-all duration-500 hover:-translate-y-1"
             >
               <div className="h-2 bg-gradient-to-r from-slate-400 to-navy" />
-              <div className="p-8 lg:p-10">
+              <div style={{ padding: '40px' }}>
                 <div className="inline-flex items-center gap-2 bg-slate-50 text-slate-700 text-[12px] font-heading font-bold tracking-wider uppercase px-4 py-2 rounded-full mb-6">
                   <span className="w-2 h-2 rounded-full bg-navy" />
                   Below 580
@@ -379,8 +379,8 @@ export default function HomePage() {
       {/* ══════════════════════════════════════════════════════════════
           HOW IT WORKS — 3 steps with images
       ══════════════════════════════════════════════════════════════ */}
-      <section className="py-24 lg:py-32 bg-white">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
+      <section style={{ paddingTop: '96px', paddingBottom: '128px', background: 'white' }}>
+        <div style={{ maxWidth: '1300px', margin: '0 auto', paddingLeft: 'clamp(40px, 5vw, 96px)', paddingRight: 'clamp(40px, 5vw, 96px)' }}>
           <motion.div
             initial="hidden" whileInView="show" viewport={{ once: true, margin: '-80px' }}
             className="text-center mb-16"
@@ -473,7 +473,8 @@ export default function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08, duration: 0.6 }}
-                className="bg-white/[0.05] backdrop-blur-sm border border-white/[0.08] rounded-2xl p-7 hover:bg-white/[0.08] transition-colors duration-500"
+                className="bg-white/[0.05] backdrop-blur-sm border border-white/[0.08] rounded-2xl hover:bg-white/[0.08] transition-colors duration-500"
+                style={{ padding: '32px' }}
               >
                 {/* Stars */}
                 <div className="flex gap-1 mb-5">
