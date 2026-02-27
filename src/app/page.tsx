@@ -560,7 +560,7 @@ export default function HomePage() {
             fill
             className="object-cover"
           />
-          <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(6,15,34,0.95), rgba(10,31,68,0.9), rgba(6,15,34,0.95))' }} />
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(6,15,34,0.75), rgba(10,31,68,0.6), rgba(6,15,34,0.75))' }} />
         </div>
 
         {/* Decorative gold line */}
