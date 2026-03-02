@@ -374,7 +374,7 @@ export default function QuizPage() {
                     fontFamily: 'var(--font-body)', fontSize: '12px', color: '#9ca3af',
                     lineHeight: 1.5,
                   }}>
-                    I agree to receive calls, texts, and emails from Zion Enterprises about homeownership programs.
+                    I agree to receive calls, texts, and emails from Arthur Jordan Realtor about homeownership programs.
                     Message & data rates may apply. Consent is not a condition of purchase.
                   </span>
                 </label>

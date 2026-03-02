@@ -3,13 +3,20 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ChevronDown, Home, Key, Users, CreditCard, ArrowRight } from 'lucide-react';
+import Image from 'next/image';
+import { Menu, X, ChevronDown, Home, Key, Users, CreditCard, ArrowRight, GraduationCap, BedDouble, Shield, Heart, Building, TrendingUp } from 'lucide-react';
 
 const services = [
-  { name: 'First Time Home Buyer', href: '/first-time-buyer', icon: Home, desc: 'MMP programs & grants' },
-  { name: 'Rent To Own', href: '/rent-to-own', icon: Key, desc: 'Move in now, buy later' },
-  { name: 'Renters to Homeowners', href: '/renters-to-homeowners', icon: Users, desc: 'Every credit level' },
-  { name: 'Credit Repair', href: '/credit-repair', icon: CreditCard, desc: 'Get mortgage-ready' },
+  { name: 'First Time Home Buyers', href: '/first-time-buyer', icon: Home, desc: 'MMP programs & grants' },
+  { name: 'Workshop Classes', href: '/workshops', icon: GraduationCap, desc: 'Home ownership education' },
+  { name: 'Renters to Homeowners', href: '/renters-to-homeowners', icon: Users, desc: 'Good, bad & no credit' },
+  { name: 'Rooms For Rent', href: '/rooms-for-rent', icon: BedDouble, desc: 'Affordable room rentals' },
+  { name: 'Credit Restoration', href: '/credit-repair', icon: CreditCard, desc: 'Get mortgage-ready' },
+  { name: 'Veterans Home Ownership', href: '/veterans', icon: Shield, desc: 'Serving those who served' },
+  { name: 'Rent To Own', href: '/rent-to-own', icon: Key, desc: 'Good, bad & no credit' },
+  { name: 'Homeless to Homeowners', href: '/homeless-to-homeowners', icon: Heart, desc: 'A fresh start home' },
+  { name: 'Sell Your Home', href: '/sell-your-home', icon: Building, desc: 'List with Arthur Jordan' },
+  { name: 'Investment Properties', href: '/investment-properties', icon: TrendingUp, desc: 'Build your portfolio' },
 ];
 
 const navLinks = [
@@ -40,13 +47,21 @@ export function Navbar() {
       <div style={{ maxWidth: '1300px', margin: '0 auto', paddingLeft: 'clamp(40px, 5vw, 96px)', paddingRight: 'clamp(40px, 5vw, 96px)' }}>
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-1.5">
-            <span className={`font-heading font-800 text-[22px] tracking-tight transition-colors duration-500 ${scrolled ? 'text-navy' : 'text-white'}`}>
-              ZION
-            </span>
-            <span className={`text-[9px] font-heading font-bold tracking-[0.2em] uppercase transition-colors duration-500 ${scrolled ? 'text-gold-dark' : 'text-gold/70'}`}>
-              Enterprises
-            </span>
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/logo.jpg"
+              alt="Arthur Jordan Realtor — Your Home Buying Specialist"
+              width={180}
+              height={60}
+              priority
+              style={{
+                height: '48px',
+                width: 'auto',
+                objectFit: 'contain',
+                filter: scrolled ? 'none' : 'brightness(0) invert(1)',
+                transition: 'filter 0.5s ease',
+              }}
+            />
           </Link>
 
           {/* Desktop Nav */}
@@ -74,20 +89,21 @@ export function Navbar() {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 8, scale: 0.98 }}
                     transition={{ duration: 0.2 }}
-                    className="absolute top-full left-0 mt-2 w-72 bg-white rounded-xl shadow-[0_20px_60px_-15px_rgba(10,31,68,0.15)] border border-gray-border/30 overflow-hidden p-2"
+                    className="absolute top-full left-0 mt-2 bg-white rounded-xl shadow-[0_20px_60px_-15px_rgba(10,31,68,0.15)] border border-gray-border/30 overflow-hidden p-2"
+                    style={{ width: '540px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2px' }}
                   >
                     {services.map((service) => (
                       <Link
                         key={service.href}
                         href={service.href}
-                        className="flex items-start gap-3 px-4 py-3.5 rounded-lg hover:bg-gray-bg transition-colors group"
+                        className="flex items-start gap-3 px-3 py-3 rounded-lg hover:bg-gray-bg transition-colors group"
                       >
-                        <div className="w-9 h-9 rounded-lg bg-gold/[0.08] flex items-center justify-center shrink-0 group-hover:bg-gold/[0.15] transition-colors">
-                          <service.icon className="w-4 h-4 text-gold" />
+                        <div className="w-8 h-8 rounded-lg bg-gold/[0.08] flex items-center justify-center shrink-0 group-hover:bg-gold/[0.15] transition-colors">
+                          <service.icon className="w-3.5 h-3.5 text-gold" />
                         </div>
                         <div>
-                          <span className="text-[13px] font-heading font-semibold text-navy block">{service.name}</span>
-                          <span className="text-[11px] font-body text-gray-text">{service.desc}</span>
+                          <span className="text-[12px] font-heading font-semibold text-navy block leading-tight">{service.name}</span>
+                          <span className="text-[10px] font-body text-gray-text">{service.desc}</span>
                         </div>
                       </Link>
                     ))}
