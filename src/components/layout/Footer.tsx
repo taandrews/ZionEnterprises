@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import { ArrowUpRight, Phone, Mail } from 'lucide-react';
 
 const serviceLinks = [
@@ -37,16 +36,15 @@ export function Footer() {
           {/* Brand */}
           <div>
             <Link href="/" className="inline-block mb-7">
-              <Image
-                src="/logo.jpg"
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/ZionEnterprises/logo.jpg"
                 alt="Arthur Jordan Realtor"
-                width={180}
-                height={60}
                 style={{
                   height: '44px',
                   width: 'auto',
                   objectFit: 'contain',
-                  filter: 'brightness(0) invert(1)',
+                  borderRadius: '4px',
                 }}
               />
             </Link>

@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import Image from 'next/image';
 import { Menu, X, ChevronDown, Home, Key, Users, CreditCard, ArrowRight, GraduationCap, BedDouble, Shield, Heart, Building, TrendingUp } from 'lucide-react';
 
 const services = [
@@ -48,20 +47,25 @@ export function Navbar() {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center">
-            <Image
-              src="/logo.jpg"
-              alt="Arthur Jordan Realtor — Your Home Buying Specialist"
-              width={180}
-              height={60}
-              priority
-              style={{
-                height: '48px',
-                width: 'auto',
-                objectFit: 'contain',
-                filter: scrolled ? 'none' : 'brightness(0) invert(1)',
-                transition: 'filter 0.5s ease',
-              }}
-            />
+            <div style={{
+              background: '#ffffff',
+              borderRadius: '8px',
+              padding: '6px 12px',
+              display: 'flex',
+              alignItems: 'center',
+            }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/ZionEnterprises/logo.jpg"
+                alt="Arthur Jordan Realtor — Your Home Buying Specialist"
+                style={{
+                  height: '40px',
+                  width: 'auto',
+                  objectFit: 'contain',
+                  display: 'block',
+                }}
+              />
+            </div>
           </Link>
 
           {/* Desktop Nav */}

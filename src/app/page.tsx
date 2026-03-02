@@ -1,91 +1,63 @@
 'use client';
 
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useRef } from 'react';
 import {
-  Home, Key, Users, CreditCard, ArrowRight,
-  Star, MapPin, CheckCircle2, Phone,
+  ArrowRight, Home, Key, Users, CreditCard,
+  GraduationCap, BedDouble, Shield, Heart, Building, TrendingUp,
+  CheckCircle2, Phone, MapPin,
 } from 'lucide-react';
-import { testimonials } from '@/data/testimonials';
 import { countyRegions } from '@/data/counties';
 
 /* ——— Animations ——— */
 const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 24 },
   show: (d: number) => ({
     opacity: 1, y: 0,
-    transition: { duration: 0.7, delay: d * 0.12, ease: [0.22, 1, 0.36, 1] as const },
+    transition: { duration: 0.6, delay: d * 0.1, ease: [0.22, 1, 0.36, 1] as const },
   }),
 };
 
-/* ——— Data ——— */
+/* ——— Services data (all 10 from Arthur) ——— */
 const services = [
-  {
-    icon: Home,
-    title: 'First Time Home Buyer',
-    desc: 'Access Maryland\'s MMP programs, up to $6,000 in down payment assistance, and statewide grants.',
-    href: '/first-time-buyer',
-    img: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&q=80',
-  },
-  {
-    icon: Key,
-    title: 'Rent To Own',
-    desc: 'Move into your future home now. Build credit and savings while you live there.',
-    href: '/rent-to-own',
-    img: 'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=600&q=80',
-  },
-  {
-    icon: Users,
-    title: 'Renters to Homeowners',
-    desc: 'Programs for every credit level. Good, bad, or none — we build a path that works.',
-    href: '/renters-to-homeowners',
-    img: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80',
-  },
-  {
-    icon: CreditCard,
-    title: 'Credit Repair',
-    desc: 'Targeted credit restoration designed to get you mortgage-ready, not just score-boosted.',
-    href: '/credit-repair',
-    img: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=600&q=80',
-  },
+  { icon: Home, title: 'First Time Home Buyers', desc: 'MMP programs, down payment assistance & statewide grants', href: '/first-time-buyer' },
+  { icon: GraduationCap, title: 'Home Ownership Workshop Classes', desc: 'Education & preparation for the buying process', href: '/workshops' },
+  { icon: Users, title: 'Renters to Homeowners', desc: 'Programs for good, bad & no credit — we build a path', href: '/renters-to-homeowners' },
+  { icon: BedDouble, title: 'Rooms For Rent', desc: 'Affordable room rental options across Maryland', href: '/rooms-for-rent' },
+  { icon: CreditCard, title: 'Credit Restoration', desc: 'Get mortgage-ready with targeted credit repair', href: '/credit-repair' },
+  { icon: Shield, title: 'Veterans Home Ownership', desc: 'Helping those who served become homeowners', href: '/veterans' },
+  { icon: Key, title: 'Rent To Own', desc: 'Move in now, buy later — good, bad & no credit', href: '/rent-to-own' },
+  { icon: Heart, title: 'Homeless to Homeowners', desc: 'A fresh start and a real path to owning a home', href: '/homeless-to-homeowners' },
+  { icon: Building, title: 'Sell Your Home', desc: 'List with Arthur Jordan and get top dollar', href: '/sell-your-home' },
+  { icon: TrendingUp, title: 'Investment Properties', desc: 'Build your real estate portfolio in Maryland', href: '/investment-properties' },
 ];
 
-const steps = [
+/* ——— Credit tiers ——— */
+const tiers = [
   {
-    num: '01',
-    title: 'Take Our 2-Minute Quiz',
-    desc: 'Answer a few questions about your goals, credit, and budget. No judgment — just honest matching.',
-    img: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=500&q=80',
+    badge: '680+', title: 'Strong Position', color: 'emerald',
+    desc: 'Conventional loans, full MMP access, best rates. Many close within 60 days.',
+    features: ['Best interest rates', 'Full program access', 'Fast 60-day closing'],
   },
   {
-    num: '02',
-    title: 'Get Your Free Plan',
-    desc: 'We analyze your answers and build a personalized roadmap with the programs you qualify for.',
-    img: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=500&q=80',
+    badge: '580–679', title: 'Building Momentum', color: 'gold', featured: true,
+    desc: 'FHA loans, targeted DPA, credit optimization. A short prep period unlocks major savings.',
+    features: ['FHA loan eligible', 'Down payment assistance', 'Credit coaching included'],
   },
   {
-    num: '03',
-    title: 'Move Into Your Home',
-    desc: 'Whether it\'s 30 days or 12 months, we walk with you every step until you have the keys.',
-    img: 'https://images.unsplash.com/photo-1560184897-ae75f418493e?w=500&q=80',
+    badge: 'Below 580', title: 'Fresh Start', color: 'navy',
+    desc: 'Credit repair pathway, rent-to-own bridge, 6–12 month plan to mortgage readiness.',
+    features: ['Credit repair pathway', 'Rent-to-own option', 'Step-by-step plan'],
   },
 ];
 
 export default function HomePage() {
-  const heroRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
-  const heroY = useTransform(scrollYProgress, [0, 1], [0, 150]);
-
   return (
     <>
-      {/* ══════════════════════════════════════════════════════════════
-          HERO — Full-screen cinematic with background image
-      ══════════════════════════════════════════════════════════════ */}
-      <section ref={heroRef} className="relative min-h-[100svh] flex items-center overflow-hidden">
-        {/* Background image */}
-        <motion.div style={{ y: heroY }} className="absolute inset-0 -top-[50px] -bottom-[50px]">
+      {/* ═══════ HERO ═══════ */}
+      <section className="relative min-h-[100svh] flex items-center overflow-hidden">
+        <div className="absolute inset-0">
           <Image
             src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=1920&q=80"
             alt="Beautiful Maryland home"
@@ -93,156 +65,123 @@ export default function HomePage() {
             className="object-cover"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-navy-dark/80 via-navy/55 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/40 via-transparent to-navy-dark/10" />
-        </motion.div>
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(6,15,34,0.92) 0%, rgba(10,31,68,0.75) 50%, rgba(6,15,34,0.6) 100%)' }} />
+        </div>
 
-        <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-gold to-transparent z-20" />
+        <div className="absolute bottom-0 left-0 right-0 z-20" style={{ height: '3px', background: 'linear-gradient(to right, transparent, #D4A017, transparent)' }} />
 
-        <div className="relative z-10 w-full" style={{ maxWidth: '1300px', margin: '0 auto', paddingLeft: 'clamp(40px, 5vw, 96px)', paddingRight: 'clamp(40px, 5vw, 96px)', paddingTop: '128px', paddingBottom: '0' }}>
-          <div className="max-w-3xl">
+        <div className="relative z-10 w-full" style={{ maxWidth: '1300px', margin: '0 auto', paddingLeft: 'clamp(24px, 5vw, 96px)', paddingRight: 'clamp(24px, 5vw, 96px)', paddingTop: '140px', paddingBottom: '80px' }}>
+          <div style={{ maxWidth: '720px' }}>
             <motion.div initial="hidden" animate="show">
-
-              {/* Headline */}
               <motion.h1
                 variants={fadeUp} custom={1}
-                className="text-[clamp(2.8rem,6vw,4.8rem)] font-heading font-800 text-white leading-[1.08] mb-6"
+                className="font-heading font-800 text-white leading-[1.08]"
+                style={{ fontSize: 'clamp(2.6rem, 6vw, 4.5rem)', marginBottom: '24px' }}
               >
-                Your Path From
-                <br />
-                Renting to{' '}
-                <span className="relative inline-block text-gold">
-                  Owning
-                  <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 200 8" fill="none">
-                    <path d="M0 6C50 2 150 2 200 6" stroke="#D4A017" strokeWidth="3" strokeLinecap="round" />
-                  </svg>
-                </span>
+                Your Home Buying{' '}
+                <span className="text-gold">Specialist</span>
               </motion.h1>
 
               <motion.p
                 variants={fadeUp} custom={2}
-                className="text-white/60 text-lg md:text-xl font-body leading-relaxed mb-10 max-w-xl"
+                className="text-white/60 font-body leading-relaxed"
+                style={{ fontSize: 'clamp(16px, 2vw, 20px)', marginBottom: '40px', maxWidth: '560px' }}
               >
-                We connect Maryland renters with homeownership programs, down payment assistance, and expert guidance — no matter your credit situation.
+                Arthur Jordan connects Maryland renters with homeownership programs, down payment assistance, and expert guidance — no matter your credit situation.
               </motion.p>
 
-              {/* CTA Buttons */}
-              <motion.div variants={fadeUp} custom={3} className="flex flex-wrap gap-4 mb-20">
+              <motion.div variants={fadeUp} custom={3} className="flex flex-wrap" style={{ gap: '16px' }}>
                 <Link
                   href="/quiz"
-                  className="group flex items-center gap-3 px-8 py-4 bg-gold hover:bg-gold-light text-navy font-heading font-bold text-[15px] rounded-lg transition-all duration-300 hover:shadow-[0_20px_60px_-15px_rgba(212,160,23,0.5)]"
+                  className="group"
+                  style={{
+                    display: 'inline-flex', alignItems: 'center', gap: '12px',
+                    padding: '16px 32px', background: '#D4A017', color: '#0A1F44',
+                    fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '15px',
+                    borderRadius: '8px', textDecoration: 'none',
+                    transition: 'all 0.3s ease',
+                  }}
                 >
                   See What You Qualify For
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight style={{ width: '16px', height: '16px' }} />
                 </Link>
                 <Link
-                  href="/about"
-                  className="flex items-center gap-3 px-8 py-4 bg-white/10 hover:bg-white/15 backdrop-blur-sm text-white font-heading font-semibold text-[15px] rounded-lg border border-white/20 transition-all duration-300"
+                  href="/contact"
+                  style={{
+                    display: 'inline-flex', alignItems: 'center', gap: '12px',
+                    padding: '16px 32px', background: 'rgba(255,255,255,0.1)',
+                    backdropFilter: 'blur(8px)',
+                    color: '#ffffff', fontFamily: 'var(--font-heading)', fontWeight: 600,
+                    fontSize: '15px', borderRadius: '8px', textDecoration: 'none',
+                    border: '1px solid rgba(255,255,255,0.2)',
+                    transition: 'all 0.3s ease',
+                  }}
                 >
-                  How It Works
+                  <Phone style={{ width: '16px', height: '16px' }} />
+                  Contact Arthur
                 </Link>
-              </motion.div>
-
-              {/* Stats Bar */}
-              <motion.div
-                variants={fadeUp} custom={4}
-                className="grid grid-cols-3 gap-8 max-w-lg"
-              >
-                {[
-                  { value: '760K+', label: 'Eligible Renters' },
-                  { value: '24', label: 'Counties Served' },
-                  { value: '15+', label: 'Active Programs' },
-                ].map((s) => (
-                  <div key={s.label} className="border-l-2 border-gold/30 pl-5">
-                    <p className="text-3xl font-heading font-800 text-white">{s.value}</p>
-                    <p className="text-white/40 text-[13px] font-body mt-1">{s.label}</p>
-                  </div>
-                ))}
               </motion.div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════════════
-          TRUST BAR — Scrolling credentials
-      ══════════════════════════════════════════════════════════════ */}
-      <section className="bg-navy py-4 overflow-hidden border-b border-white/5">
-        <div className="flex marquee-track whitespace-nowrap">
-          {[...Array(2)].map((_, setIdx) => (
-            <div key={setIdx} className="flex items-center shrink-0">
-              {[
-                'Maryland Mortgage Program',
-                'FHA & Conventional Loans',
-                'Down Payment Assistance up to $6,000',
-                'Rent-to-Own Programs',
-                'Credit Restoration Services',
-                'All 24 Jurisdictions',
-                'Free Homeownership Quiz',
-              ].map((item) => (
-                <span key={`${setIdx}-${item}`} className="flex items-center gap-3 px-6">
-                  <Star className="w-3 h-3 fill-gold text-gold shrink-0" />
-                  <span className="text-white/50 text-[12px] font-heading font-semibold tracking-wider uppercase">{item}</span>
-                </span>
-              ))}
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ══════════════════════════════════════════════════════════════
-          SERVICES — Image-backed cards with overlays
-      ══════════════════════════════════════════════════════════════ */}
-      <section style={{ paddingTop: '96px', paddingBottom: '96px', background: 'white' }}>
-        <div style={{ maxWidth: '1300px', margin: '0 auto', paddingLeft: 'clamp(40px, 5vw, 96px)', paddingRight: 'clamp(40px, 5vw, 96px)' }}>
-          {/* Section Header */}
+      {/* ═══════ SERVICES — All 10 ═══════ */}
+      <section style={{ paddingTop: '96px', paddingBottom: '96px', background: '#ffffff' }}>
+        <div style={{ maxWidth: '1300px', margin: '0 auto', paddingLeft: 'clamp(24px, 5vw, 96px)', paddingRight: 'clamp(24px, 5vw, 96px)' }}>
           <motion.div
             initial="hidden" whileInView="show" viewport={{ once: true, margin: '-80px' }}
-            style={{ textAlign: 'center', marginBottom: '48px' }}
+            style={{ textAlign: 'center', marginBottom: '56px' }}
           >
-            <motion.h2 variants={fadeUp} custom={0} className="text-[clamp(2rem,4vw,3rem)] font-heading font-800 text-navy" style={{ marginBottom: '16px' }}>
-              Four Paths to Homeownership
+            <motion.h2
+              variants={fadeUp} custom={0}
+              className="font-heading font-800 text-navy"
+              style={{ fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', marginBottom: '16px' }}
+            >
+              What We Do
             </motion.h2>
-            <motion.p variants={fadeUp} custom={1} className="text-gray-text font-body" style={{ fontSize: '16px', maxWidth: '680px', margin: '0 auto', lineHeight: '1.6' }}>
-              Every renter has a different starting point. We meet you exactly where you are.
+            <motion.p
+              variants={fadeUp} custom={1}
+              className="text-gray-text font-body"
+              style={{ fontSize: '16px', maxWidth: '600px', margin: '0 auto', lineHeight: '1.6' }}
+            >
+              Full-service homeownership solutions for every situation.
             </motion.p>
           </motion.div>
 
-          {/* Service Cards Grid */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '16px' }}>
             {services.map((s, i) => (
               <motion.div
                 key={s.title}
-                initial={{ opacity: 0, y: 40 }}
+                initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ delay: i * 0.05, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
               >
                 <Link
                   href={s.href}
-                  className="group card-zoom relative block h-[420px] rounded-2xl overflow-hidden"
+                  style={{
+                    display: 'flex', alignItems: 'flex-start', gap: '16px',
+                    padding: '24px', borderRadius: '14px',
+                    border: '1px solid #E2E4EA', background: '#ffffff',
+                    textDecoration: 'none', transition: 'all 0.3s ease',
+                  }}
+                  className="group hover:border-gold/40 hover:shadow-[0_8px_30px_-12px_rgba(212,160,23,0.15)]"
                 >
-                  {/* Card background image */}
-                  <Image
-                    src={s.img}
-                    alt={s.title}
-                    fill
-                    className="object-cover card-img"
-                  />
-                  {/* Gradient overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-navy-dark via-navy-dark/60 to-transparent opacity-90 group-hover:opacity-95 transition-opacity duration-500" />
-
-                  {/* Content */}
-                  <div className="absolute inset-0 z-10 flex flex-col justify-end" style={{ padding: '28px' }}>
-                    {/* Icon */}
-                    <div className="w-12 h-12 rounded-xl bg-gold/20 backdrop-blur-sm flex items-center justify-center mb-4 group-hover:bg-gold/30 transition-colors duration-300">
-                      <s.icon className="w-5 h-5 text-gold" />
-                    </div>
-                    <h3 className="font-heading font-bold text-white text-xl mb-2">{s.title}</h3>
-                    <p className="text-white/50 text-[14px] font-body leading-relaxed mb-4">{s.desc}</p>
-                    <div className="flex items-center gap-2 text-gold text-[13px] font-heading font-semibold group-hover:gap-3 transition-all duration-300">
-                      Learn more <ArrowRight className="w-3.5 h-3.5" />
-                    </div>
+                  <div style={{
+                    width: '44px', height: '44px', borderRadius: '10px',
+                    background: 'rgba(212,160,23,0.08)', display: 'flex',
+                    alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+                  }}>
+                    <s.icon style={{ width: '20px', height: '20px', color: '#D4A017' }} />
+                  </div>
+                  <div>
+                    <h3 className="font-heading font-bold text-navy" style={{ fontSize: '15px', marginBottom: '4px' }}>
+                      {s.title}
+                    </h3>
+                    <p className="text-gray-text font-body" style={{ fontSize: '13px', lineHeight: '1.5' }}>
+                      {s.desc}
+                    </p>
                   </div>
                 </Link>
               </motion.div>
@@ -251,293 +190,144 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════════════
-          CREDIT PATHWAYS — Bold visual tiers
-      ══════════════════════════════════════════════════════════════ */}
+      {/* ═══════ CREDIT PATHWAYS ═══════ */}
       <section className="relative overflow-hidden" style={{ paddingTop: '96px', paddingBottom: '96px', background: '#F5F6FA' }}>
-        {/* Subtle dot grid background */}
         <div className="absolute inset-0" style={{ opacity: 0.03, backgroundImage: 'radial-gradient(circle, #0A1F44 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
 
-        <div className="relative" style={{ maxWidth: '1300px', margin: '0 auto', paddingLeft: 'clamp(40px, 5vw, 96px)', paddingRight: 'clamp(40px, 5vw, 96px)' }}>
+        <div className="relative" style={{ maxWidth: '1300px', margin: '0 auto', paddingLeft: 'clamp(24px, 5vw, 96px)', paddingRight: 'clamp(24px, 5vw, 96px)' }}>
           <motion.div
             initial="hidden" whileInView="show" viewport={{ once: true, margin: '-80px' }}
             style={{ textAlign: 'center', marginBottom: '48px' }}
           >
-            <motion.h2 variants={fadeUp} custom={0} className="text-[clamp(2rem,4vw,3rem)] font-heading font-800 text-navy" style={{ marginBottom: '16px' }}>
+            <motion.h2 variants={fadeUp} custom={0} className="font-heading font-800 text-navy" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', marginBottom: '16px' }}>
               Which Path Is Right For You?
             </motion.h2>
-            <motion.p variants={fadeUp} custom={1} className="text-gray-text font-body" style={{ fontSize: '16px', maxWidth: '680px', margin: '0 auto', lineHeight: '1.6' }}>
+            <motion.p variants={fadeUp} custom={1} className="text-gray-text font-body" style={{ fontSize: '16px', maxWidth: '600px', margin: '0 auto', lineHeight: '1.6' }}>
               Your credit score shapes your options — but it never closes the door.
             </motion.p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-6">
-            {/* 680+ */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0, duration: 0.7 }}
-              className="relative bg-white rounded-2xl overflow-hidden border border-gray-border/50 group hover:shadow-[0_30px_80px_-20px_rgba(22,163,74,0.15)] transition-all duration-500 hover:-translate-y-1"
-            >
-              {/* Top color band */}
-              <div className="h-2 bg-gradient-to-r from-emerald-400 to-emerald-600" />
-              <div style={{ padding: '40px' }}>
-                <div className="inline-flex items-center gap-2 bg-emerald-50 text-emerald-700 text-[12px] font-heading font-bold tracking-wider uppercase px-4 py-2 rounded-full mb-6">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                  680+
-                </div>
-                <h3 className="font-heading font-bold text-navy text-2xl mb-3">Strong Position</h3>
-                <p className="text-gray-text text-[15px] font-body leading-relaxed mb-8">
-                  Conventional loans, full MMP access, best rates. Many close within 60 days.
-                </p>
-                <ul className="space-y-3 mb-8">
-                  {['Best interest rates', 'Full program access', 'Fast 60-day closing'].map((f) => (
-                    <li key={f} className="flex items-center gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
-                      <span className="text-navy/70 text-[14px] font-body">{f}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Link href="/quiz" className="group/btn flex items-center gap-2 text-navy font-heading font-bold text-[14px] hover:text-emerald-600 transition-colors">
-                  Get started <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                </Link>
-              </div>
-            </motion.div>
+          <div className="grid md:grid-cols-3" style={{ gap: '24px' }}>
+            {tiers.map((tier, i) => {
+              const isGold = tier.color === 'gold';
+              const isEmerald = tier.color === 'emerald';
+              const bandColor = isEmerald
+                ? 'linear-gradient(to right, #34d399, #059669)'
+                : isGold
+                  ? 'linear-gradient(to right, #D4A017, #E8BF4A)'
+                  : 'linear-gradient(to right, #94a3b8, #0A1F44)';
+              const badgeBg = isEmerald ? '#ecfdf5' : isGold ? 'rgba(212,160,23,0.1)' : '#f1f5f9';
+              const badgeText = isEmerald ? '#047857' : isGold ? '#D4A017' : '#475569';
+              const dotColor = isEmerald ? '#10b981' : isGold ? '#D4A017' : '#0A1F44';
+              const checkColor = isEmerald ? '#10b981' : isGold ? '#D4A017' : '#0A1F44';
 
-            {/* 580-679 — Featured/highlighted */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1, duration: 0.7 }}
-              className="relative bg-navy rounded-2xl overflow-hidden md:-mt-4 md:mb-[-16px] group hover:shadow-[0_30px_80px_-20px_rgba(212,160,23,0.25)] transition-all duration-500"
-            >
-              <div className="h-2 bg-gradient-to-r from-gold to-gold-light" />
-              {/* Popular badge */}
-              <div className="absolute bg-gold text-navy text-[10px] font-heading font-bold tracking-wider uppercase rounded-full" style={{ top: '24px', right: '24px', padding: '4px 12px' }}>
-                Most Common
-              </div>
-              <div style={{ padding: '40px' }}>
-                <div className="inline-flex items-center gap-2 bg-gold/10 text-gold text-[12px] font-heading font-bold tracking-wider uppercase px-4 py-2 rounded-full mb-6">
-                  <span className="w-2 h-2 rounded-full bg-gold" />
-                  580–679
-                </div>
-                <h3 className="font-heading font-bold text-white text-2xl mb-3">Building Momentum</h3>
-                <p className="text-white/50 text-[15px] font-body leading-relaxed mb-8">
-                  FHA loans, targeted DPA, credit optimization. A short prep period unlocks major savings.
-                </p>
-                <ul className="space-y-3 mb-8">
-                  {['FHA loan eligible', 'Down payment assistance', 'Credit coaching included'].map((f) => (
-                    <li key={f} className="flex items-center gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-gold shrink-0" />
-                      <span className="text-white/70 text-[14px] font-body">{f}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Link href="/quiz" className="group/btn inline-flex items-center gap-3 px-6 py-3 bg-gold hover:bg-gold-light text-navy font-heading font-bold text-[14px] rounded-lg transition-all duration-300">
-                  Get started <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                </Link>
-              </div>
-            </motion.div>
-
-            {/* Below 580 */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2, duration: 0.7 }}
-              className="relative bg-white rounded-2xl overflow-hidden border border-gray-border/50 group hover:shadow-[0_30px_80px_-20px_rgba(10,31,68,0.12)] transition-all duration-500 hover:-translate-y-1"
-            >
-              <div className="h-2 bg-gradient-to-r from-slate-400 to-navy" />
-              <div style={{ padding: '40px' }}>
-                <div className="inline-flex items-center gap-2 bg-slate-50 text-slate-700 text-[12px] font-heading font-bold tracking-wider uppercase px-4 py-2 rounded-full mb-6">
-                  <span className="w-2 h-2 rounded-full bg-navy" />
-                  Below 580
-                </div>
-                <h3 className="font-heading font-bold text-navy text-2xl mb-3">Fresh Start</h3>
-                <p className="text-gray-text text-[15px] font-body leading-relaxed mb-8">
-                  Credit repair pathway, rent-to-own bridge, 6–12 month plan to mortgage readiness.
-                </p>
-                <ul className="space-y-3 mb-8">
-                  {['Credit repair pathway', 'Rent-to-own option', 'Step-by-step plan'].map((f) => (
-                    <li key={f} className="flex items-center gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-navy shrink-0" />
-                      <span className="text-navy/70 text-[14px] font-body">{f}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Link href="/quiz" className="group/btn flex items-center gap-2 text-navy font-heading font-bold text-[14px] hover:text-navy-light transition-colors">
-                  Get started <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                </Link>
-              </div>
-            </motion.div>
+              return (
+                <motion.div
+                  key={tier.badge}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1, duration: 0.6 }}
+                  style={{
+                    borderRadius: '16px', overflow: 'hidden',
+                    background: isGold ? '#0A1F44' : '#ffffff',
+                    border: isGold ? 'none' : '1px solid #E2E4EA',
+                  }}
+                  className={isGold ? '' : 'hover:-translate-y-1 transition-transform duration-300'}
+                >
+                  <div style={{ height: '4px', background: bandColor }} />
+                  <div style={{ padding: '36px' }}>
+                    <div style={{
+                      display: 'inline-flex', alignItems: 'center', gap: '8px',
+                      background: badgeBg, color: badgeText,
+                      fontSize: '11px', fontFamily: 'var(--font-heading)', fontWeight: 700,
+                      letterSpacing: '0.06em', textTransform: 'uppercase',
+                      padding: '6px 14px', borderRadius: '999px', marginBottom: '20px',
+                    }}>
+                      <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: dotColor }} />
+                      {tier.badge}
+                    </div>
+                    <h3 style={{
+                      fontFamily: 'var(--font-heading)', fontWeight: 700,
+                      fontSize: '22px', color: isGold ? '#ffffff' : '#0A1F44',
+                      marginBottom: '10px',
+                    }}>
+                      {tier.title}
+                    </h3>
+                    <p style={{
+                      fontFamily: 'var(--font-body)', fontSize: '14px',
+                      color: isGold ? 'rgba(255,255,255,0.5)' : '#5A6376',
+                      lineHeight: '1.6', marginBottom: '24px',
+                    }}>
+                      {tier.desc}
+                    </p>
+                    <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 24px 0', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                      {tier.features.map((f) => (
+                        <li key={f} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                          <CheckCircle2 style={{ width: '16px', height: '16px', color: checkColor, flexShrink: 0 }} />
+                          <span style={{
+                            fontFamily: 'var(--font-body)', fontSize: '13px',
+                            color: isGold ? 'rgba(255,255,255,0.7)' : 'rgba(10,31,68,0.7)',
+                          }}>
+                            {f}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                    <Link
+                      href="/quiz"
+                      style={{
+                        display: 'inline-flex', alignItems: 'center', gap: '8px',
+                        fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '14px',
+                        color: isGold ? '#D4A017' : '#0A1F44', textDecoration: 'none',
+                      }}
+                    >
+                      Take the quiz <ArrowRight style={{ width: '14px', height: '14px' }} />
+                    </Link>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════════════
-          HOW IT WORKS — 3 steps with images
-      ══════════════════════════════════════════════════════════════ */}
-      <section style={{ paddingTop: '96px', paddingBottom: '128px', background: 'white' }}>
-        <div style={{ maxWidth: '1300px', margin: '0 auto', paddingLeft: 'clamp(40px, 5vw, 96px)', paddingRight: 'clamp(40px, 5vw, 96px)' }}>
-          <motion.div
-            initial="hidden" whileInView="show" viewport={{ once: true, margin: '-80px' }}
-            style={{ textAlign: 'center', marginBottom: '48px' }}
-          >
-            <motion.h2 variants={fadeUp} custom={0} className="text-[clamp(2rem,4vw,3rem)] font-heading font-800 text-navy">
-              Three Simple Steps
-            </motion.h2>
-          </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {steps.map((step, i) => (
-              <motion.div
-                key={step.num}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.12, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                className="group"
-              >
-                {/* Image */}
-                <div className="relative h-[240px] rounded-2xl overflow-hidden mb-6">
-                  <Image
-                    src={step.img}
-                    alt={step.title}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/70 to-transparent" />
-                  {/* Step number badge */}
-                  <div className="absolute top-4 left-4 w-12 h-12 rounded-xl bg-gold flex items-center justify-center">
-                    <span className="text-navy font-heading font-800 text-[15px]">{step.num}</span>
-                  </div>
-                </div>
-
-                <h3 className="font-heading font-bold text-navy text-xl mb-2">{step.title}</h3>
-                <p className="text-gray-text text-[14px] font-body leading-relaxed">{step.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3 }}
-            style={{ textAlign: 'center', marginTop: '56px' }}
-          >
-            <Link
-              href="/quiz"
-              className="group inline-flex items-center gap-3 px-10 py-4 bg-navy hover:bg-navy-light text-white font-heading font-bold text-[15px] rounded-lg transition-all duration-300 hover:shadow-[0_20px_50px_-12px_rgba(10,31,68,0.3)]"
-            >
-              Start Your Quiz
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ══════════════════════════════════════════════════════════════
-          TESTIMONIALS — Dark section with real depth
-      ══════════════════════════════════════════════════════════════ */}
-      <section className="relative overflow-hidden" style={{ paddingTop: '96px', paddingBottom: '96px' }}>
-        {/* Background image */}
-        <div className="absolute inset-0">
-          <Image
-            src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1920&q=70"
-            alt="Background"
-            fill
-            className="object-cover"
-          />
-          <div className="absolute inset-0" style={{ background: 'rgba(6, 15, 34, 0.95)' }} />
-        </div>
-
-        <div className="relative" style={{ zIndex: 10, maxWidth: '1300px', margin: '0 auto', paddingLeft: 'clamp(40px, 5vw, 96px)', paddingRight: 'clamp(40px, 5vw, 96px)' }}>
-          <motion.div
-            initial="hidden" whileInView="show" viewport={{ once: true, margin: '-80px' }}
-            style={{ textAlign: 'center', marginBottom: '48px' }}
-          >
-            <motion.h2 variants={fadeUp} custom={0} className="text-[clamp(2rem,4vw,3rem)] font-heading font-800 text-white">
-              Real Results From{' '}
-              <span className="text-gold">Real People</span>
-            </motion.h2>
-          </motion.div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {testimonials.map((t, i) => (
-              <motion.div
-                key={t.name}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08, duration: 0.6 }}
-                className="bg-white/[0.05] backdrop-blur-sm border border-white/[0.08] rounded-2xl hover:bg-white/[0.08] transition-colors duration-500"
-                style={{ padding: '32px' }}
-              >
-                {/* Stars */}
-                <div className="flex gap-1 mb-5">
-                  {[...Array(5)].map((_, j) => (
-                    <Star key={j} className="w-3.5 h-3.5 fill-gold text-gold" />
-                  ))}
-                </div>
-
-                {/* Quote */}
-                <p className="text-white/55 text-[14px] font-body leading-[1.8] mb-7">
-                  &ldquo;{t.quote}&rdquo;
-                </p>
-
-                {/* Person */}
-                <div className="flex items-center gap-3 pt-5 border-t border-white/[0.06]">
-                  {/* Avatar circle with initial */}
-                  <div className="w-10 h-10 rounded-full bg-gold/20 flex items-center justify-center">
-                    <span className="text-gold font-heading font-bold text-sm">{t.name[0]}</span>
-                  </div>
-                  <div>
-                    <p className="text-white font-heading font-semibold text-[14px]">{t.name}</p>
-                    <p className="text-white/30 text-[12px] font-body">{t.location}</p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ══════════════════════════════════════════════════════════════
-          COUNTY COVERAGE — Clean grid with visual marker
-      ══════════════════════════════════════════════════════════════ */}
-      <section style={{ paddingTop: '96px', paddingBottom: '96px', background: 'white' }}>
-        <div style={{ maxWidth: '1300px', margin: '0 auto', paddingLeft: 'clamp(40px, 5vw, 96px)', paddingRight: 'clamp(40px, 5vw, 96px)' }}>
-          <motion.div
-            initial="hidden" whileInView="show" viewport={{ once: true, margin: '-80px' }}
-          >
-            <div className="grid lg:grid-cols-[1fr_2.2fr] gap-16 lg:gap-24">
+      {/* ═══════ COUNTY COVERAGE ═══════ */}
+      <section style={{ paddingTop: '96px', paddingBottom: '96px', background: '#ffffff' }}>
+        <div style={{ maxWidth: '1300px', margin: '0 auto', paddingLeft: 'clamp(24px, 5vw, 96px)', paddingRight: 'clamp(24px, 5vw, 96px)' }}>
+          <motion.div initial="hidden" whileInView="show" viewport={{ once: true, margin: '-80px' }}>
+            <div className="grid lg:grid-cols-[1fr_2.2fr]" style={{ gap: '64px' }}>
               <div>
-                <motion.h2 variants={fadeUp} custom={0} className="text-[clamp(2rem,3.5vw,2.8rem)] font-heading font-800 text-navy mb-5 leading-tight">
-                  Serving Every Corner of Maryland
+                <motion.h2
+                  variants={fadeUp} custom={0}
+                  className="font-heading font-800 text-navy leading-tight"
+                  style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.6rem)', marginBottom: '16px' }}
+                >
+                  Serving All of Maryland
                 </motion.h2>
-                <motion.p variants={fadeUp} custom={1} className="text-gray-text text-[15px] font-body leading-relaxed mb-8">
-                  From Western Maryland to the Eastern Shore — all 24 jurisdictions. If you rent in Maryland, we can help.
+                <motion.p variants={fadeUp} custom={1} className="text-gray-text font-body" style={{ fontSize: '15px', lineHeight: '1.7', marginBottom: '24px' }}>
+                  From Western Maryland to the Eastern Shore — all 24 jurisdictions. If you rent in Maryland, Arthur Jordan can help.
                 </motion.p>
-                <motion.div variants={fadeUp} custom={2} className="inline-flex items-center gap-3 bg-navy/5 rounded-xl px-5 py-3">
-                  <MapPin className="w-5 h-5 text-gold" />
-                  <span className="text-navy font-heading font-bold text-[14px]">24 counties & Baltimore City</span>
+                <motion.div variants={fadeUp} custom={2} style={{
+                  display: 'inline-flex', alignItems: 'center', gap: '12px',
+                  background: 'rgba(10,31,68,0.04)', borderRadius: '12px',
+                  padding: '12px 20px',
+                }}>
+                  <MapPin style={{ width: '18px', height: '18px', color: '#D4A017' }} />
+                  <span className="font-heading font-bold text-navy" style={{ fontSize: '14px' }}>24 counties & Baltimore City</span>
                 </motion.div>
               </div>
 
-              {/* Right — county grid */}
-              <motion.div variants={fadeUp} custom={2} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-8">
+              <motion.div variants={fadeUp} custom={2} className="grid sm:grid-cols-2 lg:grid-cols-3" style={{ gap: '32px' }}>
                 {Object.entries(countyRegions).map(([region, counties]) => (
                   <div key={region}>
-                    <div className="flex items-center gap-2 mb-3">
-                      <div className="w-2 h-2 rounded-full bg-gold" />
-                      <h3 className="font-heading font-bold text-navy text-[13px] tracking-wide uppercase">{region}</h3>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+                      <div style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#D4A017' }} />
+                      <h3 className="font-heading font-bold text-navy" style={{ fontSize: '12px', letterSpacing: '0.08em', textTransform: 'uppercase' }}>{region}</h3>
                     </div>
-                    <div className="space-y-1.5 pl-4 border-l-2 border-gray-border/50">
+                    <div style={{ paddingLeft: '16px', borderLeft: '2px solid #E2E4EA', display: 'flex', flexDirection: 'column', gap: '6px' }}>
                       {counties.map((county) => (
-                        <p key={county} className="text-gray-text text-[13px] font-body">{county}</p>
+                        <p key={county} className="text-gray-text font-body" style={{ fontSize: '13px' }}>{county}</p>
                       ))}
                     </div>
                   </div>
@@ -548,11 +338,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════════════
-          CTA — Full bleed with background image
-      ══════════════════════════════════════════════════════════════ */}
-      <section className="relative overflow-hidden" style={{ paddingTop: '128px', paddingBottom: '128px' }}>
-        {/* Background */}
+      {/* ═══════ CTA ═══════ */}
+      <section className="relative overflow-hidden" style={{ paddingTop: '120px', paddingBottom: '120px' }}>
         <div className="absolute inset-0">
           <Image
             src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=1920&q=70"
@@ -560,37 +347,38 @@ export default function HomePage() {
             fill
             className="object-cover"
           />
-          <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(6,15,34,0.75), rgba(10,31,68,0.6), rgba(6,15,34,0.75))' }} />
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(6,15,34,0.88), rgba(10,31,68,0.75), rgba(6,15,34,0.88))' }} />
         </div>
 
-        {/* Decorative gold line */}
         <div className="absolute top-0 left-0 right-0" style={{ height: '3px', background: 'linear-gradient(to right, transparent, #D4A017, transparent)', zIndex: 10 }} />
 
-        <div className="relative text-center" style={{ zIndex: 10, maxWidth: '768px', margin: '0 auto', paddingLeft: 'clamp(40px, 5vw, 96px)', paddingRight: 'clamp(40px, 5vw, 96px)' }}>
+        <div className="relative" style={{ zIndex: 10, maxWidth: '680px', margin: '0 auto', paddingLeft: 'clamp(24px, 5vw, 96px)', paddingRight: 'clamp(24px, 5vw, 96px)', textAlign: 'center' }}>
           <motion.div initial="hidden" whileInView="show" viewport={{ once: true }}>
             <motion.h2
               variants={fadeUp} custom={1}
-              className="text-[clamp(2.4rem,5vw,3.8rem)] font-heading font-800 text-white leading-[1.1]"
-              style={{ marginBottom: '24px' }}
+              className="font-heading font-800 text-white"
+              style={{ fontSize: 'clamp(2.2rem, 5vw, 3.5rem)', lineHeight: '1.1', marginBottom: '20px' }}
             >
               Ready to Stop Renting?
             </motion.h2>
-            <motion.p variants={fadeUp} custom={2} className="text-white/40 font-body" style={{ fontSize: '18px', lineHeight: '1.6', marginBottom: '48px', maxWidth: '520px', margin: '0 auto 48px auto' }}>
+            <motion.p variants={fadeUp} custom={2} className="text-white/40 font-body" style={{ fontSize: '17px', lineHeight: '1.6', marginBottom: '40px' }}>
               Take the first step. Our free quiz matches you with Maryland programs in under 2 minutes.
             </motion.p>
 
-            <motion.div variants={fadeUp} custom={3} className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <motion.div variants={fadeUp} custom={3}>
               <Link
                 href="/quiz"
-                className="group flex items-center gap-3 px-10 py-5 bg-gold hover:bg-gold-light text-navy font-heading font-bold text-base rounded-lg transition-all duration-300 hover:shadow-[0_24px_60px_-12px_rgba(212,160,23,0.4)]"
+                style={{
+                  display: 'inline-flex', alignItems: 'center', gap: '12px',
+                  padding: '18px 40px', background: '#D4A017', color: '#0A1F44',
+                  fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '16px',
+                  borderRadius: '10px', textDecoration: 'none',
+                  transition: 'all 0.3s ease',
+                }}
               >
                 See What You Qualify For
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight style={{ width: '18px', height: '18px' }} />
               </Link>
-              <div className="flex items-center gap-4 text-white/30 text-[14px] font-body">
-                <Phone className="w-4 h-4" />
-                (443) 555-1234
-              </div>
             </motion.div>
           </motion.div>
         </div>
