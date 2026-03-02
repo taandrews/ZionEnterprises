@@ -7,18 +7,19 @@ import { Menu, X, ChevronDown, Home, Key, Users, CreditCard, ArrowRight, Graduat
 
 const services = [
   { name: 'First Time Home Buyers', href: '/first-time-buyer', icon: Home, desc: 'MMP programs & grants' },
-  { name: 'Workshop Classes', href: '/workshops', icon: GraduationCap, desc: 'Home ownership education' },
-  { name: 'Renters to Homeowners', href: '/renters-to-homeowners', icon: Users, desc: 'Good, bad & no credit' },
+  { name: 'Home Ownership Workshop Classes', href: '/workshops', icon: GraduationCap, desc: 'Home ownership education' },
+  { name: 'Turning Renters into Home Owners', href: '/renters-to-homeowners', icon: Users, desc: 'Good, bad & no credit' },
   { name: 'Rooms For Rent', href: '/rooms-for-rent', icon: BedDouble, desc: 'Affordable room rentals' },
   { name: 'Credit Restoration', href: '/credit-repair', icon: CreditCard, desc: 'Get mortgage-ready' },
-  { name: 'Veterans Home Ownership', href: '/veterans', icon: Shield, desc: 'Serving those who served' },
+  { name: 'Helping Our Veterans Become Home Owners', href: '/veterans', icon: Shield, desc: 'Serving those who served' },
   { name: 'Rent To Own', href: '/rent-to-own', icon: Key, desc: 'Good, bad & no credit' },
-  { name: 'Homeless to Homeowners', href: '/homeless-to-homeowners', icon: Heart, desc: 'A fresh start home' },
-  { name: 'Sell Your Home', href: '/sell-your-home', icon: Building, desc: 'List with Arthur Jordan' },
-  { name: 'Investment Properties', href: '/investment-properties', icon: TrendingUp, desc: 'Build your portfolio' },
+  { name: 'Helping the Homeless Become Home Owners', href: '/homeless-to-homeowners', icon: Heart, desc: 'A fresh start home' },
+  { name: 'Want to Sell Your Home', href: '/sell-your-home', icon: Building, desc: 'List with Arthur Jordan' },
+  { name: 'Looking to Buy Investment Properties', href: '/investment-properties', icon: TrendingUp, desc: 'Build your portfolio' },
 ];
 
 const navLinks = [
+  { name: 'Testimonials', href: '/testimonials' },
   { name: 'About', href: '/about' },
   { name: 'Blog', href: '/blog' },
   { name: 'Contact', href: '/contact' },
@@ -37,35 +38,28 @@ export function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? 'bg-white/95 backdrop-blur-xl shadow-[0_1px_3px_rgba(0,0,0,0.05)]'
-          : 'bg-transparent'
-      }`}
+      className="fixed top-0 left-0 right-0 z-50 transition-all duration-500 backdrop-blur-xl"
+      style={{
+        background: '#ffffff',
+        boxShadow: scrolled ? '0 1px 3px rgba(0,0,0,0.08)' : '0 1px 2px rgba(0,0,0,0.04)',
+      }}
     >
       <div style={{ maxWidth: '1300px', margin: '0 auto', paddingLeft: 'clamp(40px, 5vw, 96px)', paddingRight: 'clamp(40px, 5vw, 96px)' }}>
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-24">
           {/* Logo */}
           <Link href="/" className="flex items-center">
-            <div style={{
-              background: '#ffffff',
-              borderRadius: '8px',
-              padding: '6px 12px',
-              display: 'flex',
-              alignItems: 'center',
-            }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/ZionEnterprises/logo.jpg"
-                alt="Arthur Jordan Realtor — Your Home Buying Specialist"
-                style={{
-                  height: '40px',
-                  width: 'auto',
-                  objectFit: 'contain',
-                  display: 'block',
-                }}
-              />
-            </div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/ZionEnterprises/logo-transparent.png"
+              alt="Arthur Jordan Realtor — Your Home Buying Specialist"
+              style={{
+                height: '72px',
+                width: 'auto',
+                objectFit: 'contain',
+                display: 'block',
+                filter: 'contrast(1.3) saturate(1.2)',
+              }}
+            />
           </Link>
 
           {/* Desktop Nav */}
@@ -77,11 +71,7 @@ export function Navbar() {
               onMouseLeave={() => setServicesOpen(false)}
             >
               <button
-                className={`flex items-center gap-1.5 px-4 py-2 text-[13px] font-body font-medium rounded-lg transition-colors duration-300 ${
-                  scrolled
-                    ? 'text-navy/60 hover:text-navy hover:bg-navy/[0.04]'
-                    : 'text-white/60 hover:text-white hover:bg-white/[0.06]'
-                }`}
+                className="flex items-center gap-1.5 px-4 py-2 text-[13px] font-body font-medium rounded-lg transition-colors duration-300 text-navy/60 hover:text-navy hover:bg-navy/[0.04]"
               >
                 Services
                 <ChevronDown className={`w-3 h-3 transition-transform duration-200 ${servicesOpen ? 'rotate-180' : ''}`} />
@@ -120,11 +110,7 @@ export function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`px-4 py-2 text-[13px] font-body font-medium rounded-lg transition-colors duration-300 ${
-                  scrolled
-                    ? 'text-navy/60 hover:text-navy hover:bg-navy/[0.04]'
-                    : 'text-white/60 hover:text-white hover:bg-white/[0.06]'
-                }`}
+                className="px-4 py-2 text-[13px] font-body font-medium rounded-lg transition-colors duration-300 text-navy/60 hover:text-navy hover:bg-navy/[0.04]"
               >
                 {link.name}
               </Link>
@@ -142,9 +128,7 @@ export function Navbar() {
           {/* Mobile hamburger */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className={`lg:hidden p-2.5 rounded-lg transition-colors ${
-              scrolled ? 'text-navy hover:bg-navy/[0.04]' : 'text-white hover:bg-white/[0.06]'
-            }`}
+            className="lg:hidden p-2.5 rounded-lg transition-colors text-navy hover:bg-navy/[0.04]"
           >
             {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>

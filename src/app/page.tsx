@@ -10,7 +10,7 @@ import {
 } from 'lucide-react';
 import { countyRegions } from '@/data/counties';
 
-/* ——— Animations ——— */
+/* ——— Hero-only animation ——— */
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
   show: (d: number) => ({
@@ -19,18 +19,18 @@ const fadeUp = {
   }),
 };
 
-/* ——— Services data (all 10 from Arthur) ——— */
+/* ——— Services data (10 from Arthur) ——— */
 const services = [
   { icon: Home, title: 'First Time Home Buyers', desc: 'MMP programs, down payment assistance & statewide grants', href: '/first-time-buyer' },
   { icon: GraduationCap, title: 'Home Ownership Workshop Classes', desc: 'Education & preparation for the buying process', href: '/workshops' },
-  { icon: Users, title: 'Renters to Homeowners', desc: 'Programs for good, bad & no credit — we build a path', href: '/renters-to-homeowners' },
+  { icon: Users, title: 'Turning Renters into Home Owners', desc: 'Programs for good, bad & no credit — we build a path', href: '/renters-to-homeowners' },
   { icon: BedDouble, title: 'Rooms For Rent', desc: 'Affordable room rental options across Maryland', href: '/rooms-for-rent' },
   { icon: CreditCard, title: 'Credit Restoration', desc: 'Get mortgage-ready with targeted credit repair', href: '/credit-repair' },
-  { icon: Shield, title: 'Veterans Home Ownership', desc: 'Helping those who served become homeowners', href: '/veterans' },
+  { icon: Shield, title: 'Helping Our Veterans Become Home Owners', desc: 'Serving those who served our country', href: '/veterans' },
   { icon: Key, title: 'Rent To Own', desc: 'Move in now, buy later — good, bad & no credit', href: '/rent-to-own' },
-  { icon: Heart, title: 'Homeless to Homeowners', desc: 'A fresh start and a real path to owning a home', href: '/homeless-to-homeowners' },
-  { icon: Building, title: 'Sell Your Home', desc: 'List with Arthur Jordan and get top dollar', href: '/sell-your-home' },
-  { icon: TrendingUp, title: 'Investment Properties', desc: 'Build your real estate portfolio in Maryland', href: '/investment-properties' },
+  { icon: Heart, title: 'Helping the Homeless Become Home Owners', desc: 'A fresh start and a real path to owning a home', href: '/homeless-to-homeowners' },
+  { icon: Building, title: 'Want to Sell Your Home', desc: 'List with Arthur Jordan and get top dollar', href: '/sell-your-home' },
+  { icon: TrendingUp, title: 'Looking to Buy Investment Properties', desc: 'Build your real estate portfolio in Maryland', href: '/investment-properties' },
 ];
 
 /* ——— Credit tiers ——— */
@@ -93,13 +93,11 @@ export default function HomePage() {
               <motion.div variants={fadeUp} custom={3} className="flex flex-wrap" style={{ gap: '16px' }}>
                 <Link
                   href="/quiz"
-                  className="group"
                   style={{
                     display: 'inline-flex', alignItems: 'center', gap: '12px',
                     padding: '16px 32px', background: '#D4A017', color: '#0A1F44',
                     fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '15px',
                     borderRadius: '8px', textDecoration: 'none',
-                    transition: 'all 0.3s ease',
                   }}
                 >
                   See What You Qualify For
@@ -114,7 +112,6 @@ export default function HomePage() {
                     color: '#ffffff', fontFamily: 'var(--font-heading)', fontWeight: 600,
                     fontSize: '15px', borderRadius: '8px', textDecoration: 'none',
                     border: '1px solid rgba(255,255,255,0.2)',
-                    transition: 'all 0.3s ease',
                   }}
                 >
                   <Phone style={{ width: '16px', height: '16px' }} />
@@ -129,64 +126,68 @@ export default function HomePage() {
       {/* ═══════ SERVICES — All 10 ═══════ */}
       <section style={{ paddingTop: '96px', paddingBottom: '96px', background: '#ffffff' }}>
         <div style={{ maxWidth: '1300px', margin: '0 auto', paddingLeft: 'clamp(24px, 5vw, 96px)', paddingRight: 'clamp(24px, 5vw, 96px)' }}>
-          <motion.div
-            initial="hidden" whileInView="show" viewport={{ once: true, margin: '-80px' }}
-            style={{ textAlign: 'center', marginBottom: '56px' }}
-          >
-            <motion.h2
-              variants={fadeUp} custom={0}
+          <div style={{ textAlign: 'center', marginBottom: '56px' }}>
+            <h2
               className="font-heading font-800 text-navy"
               style={{ fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', marginBottom: '16px' }}
             >
               What We Do
-            </motion.h2>
-            <motion.p
-              variants={fadeUp} custom={1}
+            </h2>
+            <p
               className="text-gray-text font-body"
               style={{ fontSize: '16px', maxWidth: '600px', margin: '0 auto', lineHeight: '1.6' }}
             >
               Full-service homeownership solutions for every situation.
-            </motion.p>
-          </motion.div>
+            </p>
+          </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '16px' }}>
-            {services.map((s, i) => (
-              <motion.div
+          <div className="services-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '20px' }}>
+            {services.map((s) => (
+              <Link
                 key={s.title}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.05, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                href={s.href}
+                style={{
+                  display: 'flex', flexDirection: 'column', alignItems: 'center',
+                  textAlign: 'center', padding: '32px 16px 28px',
+                  borderRadius: '16px', background: '#ffffff',
+                  border: '1px solid #E2E4EA',
+                  textDecoration: 'none', transition: 'all 0.35s ease',
+                  position: 'relative', overflow: 'hidden',
+                }}
+                className="group hover:border-gold/50 hover:shadow-[0_12px_40px_-12px_rgba(212,160,23,0.2)]"
               >
-                <Link
-                  href={s.href}
-                  style={{
-                    display: 'flex', alignItems: 'flex-start', gap: '16px',
-                    padding: '24px', borderRadius: '14px',
-                    border: '1px solid #E2E4EA', background: '#ffffff',
-                    textDecoration: 'none', transition: 'all 0.3s ease',
-                  }}
-                  className="group hover:border-gold/40 hover:shadow-[0_8px_30px_-12px_rgba(212,160,23,0.15)]"
-                >
-                  <div style={{
-                    width: '44px', height: '44px', borderRadius: '10px',
-                    background: 'rgba(212,160,23,0.08)', display: 'flex',
-                    alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-                  }}>
-                    <s.icon style={{ width: '20px', height: '20px', color: '#D4A017' }} />
-                  </div>
-                  <div>
-                    <h3 className="font-heading font-bold text-navy" style={{ fontSize: '15px', marginBottom: '4px' }}>
-                      {s.title}
-                    </h3>
-                    <p className="text-gray-text font-body" style={{ fontSize: '13px', lineHeight: '1.5' }}>
-                      {s.desc}
-                    </p>
-                  </div>
-                </Link>
-              </motion.div>
+                <div style={{
+                  position: 'absolute', top: 0, left: 0, right: 0, height: '3px',
+                  background: 'linear-gradient(to right, #D4A017, #E8BF4A)',
+                  opacity: 0, transition: 'opacity 0.35s ease',
+                }} className="group-hover:!opacity-100" />
+                <div style={{
+                  width: '52px', height: '52px', borderRadius: '14px',
+                  background: 'linear-gradient(135deg, rgba(212,160,23,0.1), rgba(212,160,23,0.04))',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  marginBottom: '16px', transition: 'all 0.35s ease',
+                }} className="group-hover:scale-110">
+                  <s.icon style={{ width: '22px', height: '22px', color: '#D4A017' }} />
+                </div>
+                <h3 className="font-heading font-bold text-navy" style={{ fontSize: '14px', lineHeight: '1.3', marginBottom: '8px' }}>
+                  {s.title}
+                </h3>
+                <p className="text-gray-text font-body" style={{ fontSize: '12px', lineHeight: '1.5' }}>
+                  {s.desc}
+                </p>
+              </Link>
             ))}
           </div>
+
+          {/* Responsive override for smaller screens */}
+          <style>{`
+            @media (max-width: 1024px) {
+              .services-grid { grid-template-columns: repeat(3, 1fr) !important; }
+            }
+            @media (max-width: 640px) {
+              .services-grid { grid-template-columns: repeat(2, 1fr) !important; }
+            }
+          `}</style>
         </div>
       </section>
 
@@ -195,20 +196,17 @@ export default function HomePage() {
         <div className="absolute inset-0" style={{ opacity: 0.03, backgroundImage: 'radial-gradient(circle, #0A1F44 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
 
         <div className="relative" style={{ maxWidth: '1300px', margin: '0 auto', paddingLeft: 'clamp(24px, 5vw, 96px)', paddingRight: 'clamp(24px, 5vw, 96px)' }}>
-          <motion.div
-            initial="hidden" whileInView="show" viewport={{ once: true, margin: '-80px' }}
-            style={{ textAlign: 'center', marginBottom: '48px' }}
-          >
-            <motion.h2 variants={fadeUp} custom={0} className="font-heading font-800 text-navy" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', marginBottom: '16px' }}>
+          <div style={{ textAlign: 'center', marginBottom: '48px' }}>
+            <h2 className="font-heading font-800 text-navy" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', marginBottom: '16px' }}>
               Which Path Is Right For You?
-            </motion.h2>
-            <motion.p variants={fadeUp} custom={1} className="text-gray-text font-body" style={{ fontSize: '16px', maxWidth: '600px', margin: '0 auto', lineHeight: '1.6' }}>
+            </h2>
+            <p className="text-gray-text font-body" style={{ fontSize: '16px', maxWidth: '600px', margin: '0 auto', lineHeight: '1.6' }}>
               Your credit score shapes your options — but it never closes the door.
-            </motion.p>
-          </motion.div>
+            </p>
+          </div>
 
           <div className="grid md:grid-cols-3" style={{ gap: '24px' }}>
-            {tiers.map((tier, i) => {
+            {tiers.map((tier) => {
               const isGold = tier.color === 'gold';
               const isEmerald = tier.color === 'emerald';
               const bandColor = isEmerald
@@ -222,18 +220,13 @@ export default function HomePage() {
               const checkColor = isEmerald ? '#10b981' : isGold ? '#D4A017' : '#0A1F44';
 
               return (
-                <motion.div
+                <div
                   key={tier.badge}
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1, duration: 0.6 }}
                   style={{
                     borderRadius: '16px', overflow: 'hidden',
                     background: isGold ? '#0A1F44' : '#ffffff',
                     border: isGold ? 'none' : '1px solid #E2E4EA',
                   }}
-                  className={isGold ? '' : 'hover:-translate-y-1 transition-transform duration-300'}
                 >
                   <div style={{ height: '4px', background: bandColor }} />
                   <div style={{ padding: '36px' }}>
@@ -285,7 +278,7 @@ export default function HomePage() {
                       Take the quiz <ArrowRight style={{ width: '14px', height: '14px' }} />
                     </Link>
                   </div>
-                </motion.div>
+                </div>
               );
             })}
           </div>
@@ -295,46 +288,43 @@ export default function HomePage() {
       {/* ═══════ COUNTY COVERAGE ═══════ */}
       <section style={{ paddingTop: '96px', paddingBottom: '96px', background: '#ffffff' }}>
         <div style={{ maxWidth: '1300px', margin: '0 auto', paddingLeft: 'clamp(24px, 5vw, 96px)', paddingRight: 'clamp(24px, 5vw, 96px)' }}>
-          <motion.div initial="hidden" whileInView="show" viewport={{ once: true, margin: '-80px' }}>
-            <div className="grid lg:grid-cols-[1fr_2.2fr]" style={{ gap: '64px' }}>
-              <div>
-                <motion.h2
-                  variants={fadeUp} custom={0}
-                  className="font-heading font-800 text-navy leading-tight"
-                  style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.6rem)', marginBottom: '16px' }}
-                >
-                  Serving All of Maryland
-                </motion.h2>
-                <motion.p variants={fadeUp} custom={1} className="text-gray-text font-body" style={{ fontSize: '15px', lineHeight: '1.7', marginBottom: '24px' }}>
-                  From Western Maryland to the Eastern Shore — all 24 jurisdictions. If you rent in Maryland, Arthur Jordan can help.
-                </motion.p>
-                <motion.div variants={fadeUp} custom={2} style={{
-                  display: 'inline-flex', alignItems: 'center', gap: '12px',
-                  background: 'rgba(10,31,68,0.04)', borderRadius: '12px',
-                  padding: '12px 20px',
-                }}>
-                  <MapPin style={{ width: '18px', height: '18px', color: '#D4A017' }} />
-                  <span className="font-heading font-bold text-navy" style={{ fontSize: '14px' }}>24 counties & Baltimore City</span>
-                </motion.div>
+          <div className="grid lg:grid-cols-[1fr_2.2fr]" style={{ gap: '64px' }}>
+            <div>
+              <h2
+                className="font-heading font-800 text-navy leading-tight"
+                style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.6rem)', marginBottom: '16px' }}
+              >
+                Serving All of Maryland
+              </h2>
+              <p className="text-gray-text font-body" style={{ fontSize: '15px', lineHeight: '1.7', marginBottom: '24px' }}>
+                From Western Maryland to the Eastern Shore — all 24 jurisdictions. If you rent in Maryland, Arthur Jordan can help.
+              </p>
+              <div style={{
+                display: 'inline-flex', alignItems: 'center', gap: '12px',
+                background: 'rgba(10,31,68,0.04)', borderRadius: '12px',
+                padding: '12px 20px',
+              }}>
+                <MapPin style={{ width: '18px', height: '18px', color: '#D4A017' }} />
+                <span className="font-heading font-bold text-navy" style={{ fontSize: '14px' }}>24 counties & Baltimore City</span>
               </div>
-
-              <motion.div variants={fadeUp} custom={2} className="grid sm:grid-cols-2 lg:grid-cols-3" style={{ gap: '32px' }}>
-                {Object.entries(countyRegions).map(([region, counties]) => (
-                  <div key={region}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-                      <div style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#D4A017' }} />
-                      <h3 className="font-heading font-bold text-navy" style={{ fontSize: '12px', letterSpacing: '0.08em', textTransform: 'uppercase' }}>{region}</h3>
-                    </div>
-                    <div style={{ paddingLeft: '16px', borderLeft: '2px solid #E2E4EA', display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                      {counties.map((county) => (
-                        <p key={county} className="text-gray-text font-body" style={{ fontSize: '13px' }}>{county}</p>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </motion.div>
             </div>
-          </motion.div>
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3" style={{ gap: '32px' }}>
+              {Object.entries(countyRegions).map(([region, counties]) => (
+                <div key={region}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+                    <div style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#D4A017' }} />
+                    <h3 className="font-heading font-bold text-navy" style={{ fontSize: '12px', letterSpacing: '0.08em', textTransform: 'uppercase' }}>{region}</h3>
+                  </div>
+                  <div style={{ paddingLeft: '16px', borderLeft: '2px solid #E2E4EA', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                    {counties.map((county) => (
+                      <p key={county} className="text-gray-text font-body" style={{ fontSize: '13px' }}>{county}</p>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
@@ -353,34 +343,27 @@ export default function HomePage() {
         <div className="absolute top-0 left-0 right-0" style={{ height: '3px', background: 'linear-gradient(to right, transparent, #D4A017, transparent)', zIndex: 10 }} />
 
         <div className="relative" style={{ zIndex: 10, maxWidth: '680px', margin: '0 auto', paddingLeft: 'clamp(24px, 5vw, 96px)', paddingRight: 'clamp(24px, 5vw, 96px)', textAlign: 'center' }}>
-          <motion.div initial="hidden" whileInView="show" viewport={{ once: true }}>
-            <motion.h2
-              variants={fadeUp} custom={1}
-              className="font-heading font-800 text-white"
-              style={{ fontSize: 'clamp(2.2rem, 5vw, 3.5rem)', lineHeight: '1.1', marginBottom: '20px' }}
-            >
-              Ready to Stop Renting?
-            </motion.h2>
-            <motion.p variants={fadeUp} custom={2} className="text-white/40 font-body" style={{ fontSize: '17px', lineHeight: '1.6', marginBottom: '40px' }}>
-              Take the first step. Our free quiz matches you with Maryland programs in under 2 minutes.
-            </motion.p>
-
-            <motion.div variants={fadeUp} custom={3}>
-              <Link
-                href="/quiz"
-                style={{
-                  display: 'inline-flex', alignItems: 'center', gap: '12px',
-                  padding: '18px 40px', background: '#D4A017', color: '#0A1F44',
-                  fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '16px',
-                  borderRadius: '10px', textDecoration: 'none',
-                  transition: 'all 0.3s ease',
-                }}
-              >
-                See What You Qualify For
-                <ArrowRight style={{ width: '18px', height: '18px' }} />
-              </Link>
-            </motion.div>
-          </motion.div>
+          <h2
+            className="font-heading font-800 text-white"
+            style={{ fontSize: 'clamp(2.2rem, 5vw, 3.5rem)', lineHeight: '1.1', marginBottom: '20px' }}
+          >
+            Ready to Stop Renting?
+          </h2>
+          <p className="text-white/40 font-body" style={{ fontSize: '17px', lineHeight: '1.6', marginBottom: '40px' }}>
+            Take the first step. Our free quiz matches you with Maryland programs in under 2 minutes.
+          </p>
+          <Link
+            href="/quiz"
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: '12px',
+              padding: '18px 40px', background: '#D4A017', color: '#0A1F44',
+              fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '16px',
+              borderRadius: '10px', textDecoration: 'none',
+            }}
+          >
+            See What You Qualify For
+            <ArrowRight style={{ width: '18px', height: '18px' }} />
+          </Link>
         </div>
       </section>
     </>
